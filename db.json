@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "Dang Ngoc Son",
+      "email": "dangngocson931@gmail.com",
+      "password": "admin123",
+      "role": "normal",
+      "status": true
+    },
+    {
+      "id": "ac5b",
+      "username": "Son",
+      "email": "dangngocson@gmail.com",
+      "password": "admin123",
+      "role": "normal",
+      "status": true
+    },
+    {
+      "id": "10e3",
+      "username": "Son12",
+      "email": "dangngocson93@gmail.com",
+      "password": "admin123",
+      "role": "normal",
+      "status": true
+    }
+  ]
+}

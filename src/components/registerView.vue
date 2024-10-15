@@ -9,6 +9,7 @@ const refVForm = ref();
 
 const form = ref({
   username: "",
+  phone: "",
   email: "",
   password: "",
   role: "normal",
@@ -46,6 +47,7 @@ const register = () => {
           username: form.value.username,
           email: form.value.email,
           password: form.value.password,
+          phone: form.value.phone,
           role: form.value.role,
           status: true,
         })
@@ -98,81 +100,6 @@ const onSubmit = () => {
 };
 </script>
 
-<!-- <template>
-  <div class="auth-wrapper d-flex align-center justify-center pa-4">
-    <VCard class="auth-card pa-2 pt-7" max-width="448">
-      <VCardItem class="justify-center"> </VCardItem>
-
-      <VCardText class="pt-2">
-        <h5 class="text-h5 mb-1">Adventure starts here 🚀</h5>
-        <p class="mb-0">Make your app management easy and fun!</p>
-      </VCardText>
-
-      <VCardText>
-        <VForm ref="refVForm">
-          <VRow>
-            <VCol cols="12">
-              <VTextField
-                v-model="form.username"
-                autofocus
-                label="Username"
-                placeholder="johnDoe"
-                :rules="[(v) => !!v || 'Username is required']"
-              />
-            </VCol>
-            <VCol cols="12">
-              <VTextField
-                v-model="form.email"
-                label="Email"
-                type="email"
-                placeholder="johndoe@email.com"
-                :rules="[
-                  (v) => !!v || 'Email is required',
-                  (v) => /.+@.+\..+/.test(v) || 'Email must be valid',
-                ]"
-              />
-            </VCol>
-            <VCol cols="12">
-              <VTextField
-                v-model="form.password"
-                label="Password"
-                placeholder="············"
-                :type="isPasswordVisible ? 'text' : 'password'"
-                :append-inner-icon="
-                  isPasswordVisible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'
-                "
-                :rules="[
-                  (v) => !!v || 'Password is required',
-                  (v) =>
-                    v.length >= 8 || 'Password must be at least 8 characters',
-                ]"
-                @click:append-inner="isPasswordVisible = !isPasswordVisible"
-              />
-
-              <VBtn
-                block
-                type="button"
-                @click="onSubmit"
-                class="mt-4"
-                color="primary"
-              >
-                Sign up
-              </VBtn>
-            </VCol>
-
-            <VCol cols="12" class="text-center text-base">
-              <span>Already have an account?</span>
-              <RouterLink class="text-primary ms-2" :to="{ name: 'login' }">
-                Sign in instead
-              </RouterLink>
-            </VCol>
-          </VRow>
-        </VForm>
-      </VCardText>
-    </VCard>
-  </div>
-</template>
- -->
 <template>
   <div>
     <v-img
@@ -187,69 +114,85 @@ const onSubmit = () => {
       max-width="448"
       rounded="lg"
     >
-      <div class="text-subtitle-1 text-medium-emphasis">Account</div>
+      <v-form ref="refVForm">
+        <div class="text-subtitle-1 text-medium-emphasis">Account</div>
 
-      <VCol cols="12">
-        <VTextField
-          v-model="form.username"
-          autofocus
-          density="compact"
-          placeholder="Email address"
-          prepend-inner-icon="mdi-account-circle-outline"
-          variant="outlined"
-          required
-          label="Username"
-          :rules="[(v) => !!v || 'Username is required']"
-        />
-      </VCol>
-      <!-- email -->
-      <VCol cols="12">
-        <VTextField
-          v-model="form.email"
-          label="Email"
-          density="compact"
-          prepend-inner-icon="mdi-email-outline"
-          variant="outlined"
-          required
-          type="email"
-          placeholder="johndoe@email.com"
-          :rules="[
-            (v) => !!v || 'Email is required',
-            (v) => /.+@.+\..+/.test(v) || 'Email must be valid',
-          ]"
-        />
-      </VCol>
-      <!-- password -->
-      <VCol cols="12">
-        <VTextField
-          v-model="form.password"
-          label="Password"
-          density="compact"
-          prepend-inner-icon="mdi-lock-outline"
-          variant="outlined"
-          required
-          placeholder="············"
-          :type="isPasswordVisible ? 'text' : 'password'"
-          :append-inner-icon="
-            isPasswordVisible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'
-          "
-          :rules="[
-            (v) => !!v || 'Password is required',
-            (v) => v.length >= 8 || 'Password must be at least 8 characters',
-          ]"
-          @click:append-inner="isPasswordVisible = !isPasswordVisible"
-        />
+        <VCol cols="12">
+          <VTextField
+            v-model="form.username"
+            autofocus
+            density="compact"
+            placeholder="Email address"
+            prepend-inner-icon="mdi-account-circle-outline"
+            variant="outlined"
+            required
+            label="Username"
+            :rules="[(v) => !!v || 'Username is required']"
+          />
+        </VCol>
+        <VCol>
+          <v-text-field
+            v-model="form.phone"
+            density="compact"
+            placeholder="Phone"
+            variant="outlined"
+            :rules="[(v) => !!v || 'Phone is required']"
+            label="Phone"
+            name="phone"
+            prepend-inner-icon="mdi-phone"
+            type="tel"
+            required
+          ></v-text-field>
+        </VCol>
+        <!-- email -->
+        <VCol cols="12">
+          <VTextField
+            v-model="form.email"
+            label="Email"
+            density="compact"
+            prepend-inner-icon="mdi-email-outline"
+            variant="outlined"
+            required
+            type="email"
+            placeholder="johndoe@email.com"
+            :rules="[
+              (v) => !!v || 'Email is required',
+              (v) => /.+@.+\..+/.test(v) || 'Email must be valid',
+            ]"
+          />
+        </VCol>
+        <!-- password -->
+        <VCol cols="12">
+          <VTextField
+            v-model="form.password"
+            label="Password"
+            density="compact"
+            prepend-inner-icon="mdi-lock-outline"
+            variant="outlined"
+            required
+            placeholder="············"
+            :type="isPasswordVisible ? 'text' : 'password'"
+            :append-inner-icon="
+              isPasswordVisible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'
+            "
+            :rules="[
+              (v) => !!v || 'Password is required',
+              (v) => v.length >= 8 || 'Password must be at least 8 characters',
+            ]"
+            @click:append-inner="isPasswordVisible = !isPasswordVisible"
+          />
 
-        <VBtn
-          block
-          type="button"
-          @click="onSubmit"
-          class="mt-4"
-          color="primary"
-        >
-          Sign up
-        </VBtn>
-      </VCol>
+          <VBtn
+            block
+            type="button"
+            @click="onSubmit"
+            class="mt-4"
+            color="primary"
+          >
+            Sign up
+          </VBtn>
+        </VCol>
+      </v-form>
 
       <v-card-text class="text-center">
         <RouterLink class="text-primary ms-2" :to="{ name: 'login' }">

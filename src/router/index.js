@@ -10,7 +10,16 @@ import { routes } from 'vue-router/auto-routes'
 import LoginView from '@/components/loginView.vue'
 import RegisterView from '@/components/registerView.vue'
 import HomeView from '@/components/HomeView.vue'
-
+import UserProfiles from '@/components/UserProfiles.vue'
+import Incentives from '@/components/IncentivesView.vue'
+import Shipping from '@/components/shipping/ShippingView.vue'
+import BookTicket from '@/components/BookTicket/indexBookTicket.vue'
+import BookTicketDetail from '@/components/BookTicket/BookTicketDetail.vue'
+import BookingInfor from '@/components/BookTicket/BookingInfor.vue'
+import ShippingConfirmation from '@/components/shipping/ShippingConfirmation.vue'
+import ActivityView from '@/components/ActivityView.vue'
+import NewsDetail from '@/components/NewsDetail.vue'
+import NewsView from '@/components/NewsView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -33,7 +42,59 @@ const router = createRouter({
       name: 'register',
       component: RegisterView
     },
-
+    {
+      path: '/user-profiles',
+      name: 'user-profiles',
+      component: UserProfiles
+    },
+    {
+      path: '/incentives',
+      name: 'incentives',
+      component: Incentives
+    },
+    {
+      path: '/book-ticket',
+      name: 'book-ticket',
+      component: BookTicket
+    },
+    {
+      path: '/book-ticket/:id',
+      name: 'book-ticket-detail',
+      component: BookTicketDetail,
+      props: true
+    },
+    {
+      path: '/booking-infor/:id',
+      name: 'booking-infor',
+      component: BookingInfor,
+      props: true
+    },
+    {
+      path: '/news',
+      name: 'news',
+      component: NewsView
+    },
+    {
+      path: '/news-detail/:id',
+      name: 'news-detail',
+      component: NewsDetail,
+      props: true
+    },
+    {
+      path: '/shipping',
+      name: 'shipping',
+      component: Shipping
+    },
+    {
+      path: '/shipping-confirmation/:id',
+      name: 'ShippingConfirmation',
+      component: ShippingConfirmation
+    },
+    {
+      path: '/activitys',
+      name: 'activitys',
+      component: ActivityView
+    },
     ...routes
   ],
 })

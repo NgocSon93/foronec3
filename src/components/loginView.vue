@@ -10,26 +10,46 @@ const router = useRouter();
 
 const email = ref("");
 const password = ref("");
-
-const signIn = () => {
-  axios
-    .get(
-      `http://localhost:3000/users?email=${email.value}&password=${password.value}`
-    )
-    .then((response) => {
-      if (response.data.length > 0) {
-        toast.success("Login successful!");
-        setTimeout(() => {
-          router.push("/home");
-        }, 1000);
-      } else {
-        toast.error("Invalid email or password");
+const inforUsers = ref([]);
+async function getAllUsers() {
+  try {
+    const response = await axios.get("http://localhost:3001/users");
+    console.log("All users:", response.data);
+    inforUsers.value = response.data;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error;
+  }
+}
+getAllUsers();
+const signIn = async () => {
+  try {
+    const response = await axios.get(
+      `http://localhost:3001/users?email=${email.value}&password=${password.value}`
+    );
+    console.log(response);
+    if (response.data && response.data.length > 0) {
+      const user = inforUsers.value.find((user) => user.email === email.value);
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
       }
-    })
-    .catch((error) => {
-      console.error("Login error:", error);
+      toast.success("Login successful!");
+      setTimeout(() => {
+        router.push("/home");
+      }, 1000);
+    } else {
+      toast.error("Invalid email or password");
+    }
+  } catch (error) {
+    console.error("Login error:", error);
+    if (error.response) {
+      toast.error(`Server error: ${error.response.status}`);
+    } else if (error.request) {
+      toast.error("No response from server");
+    } else {
       toast.error("An error occurred during login");
-    });
+    }
+  }
 };
 
 const onSubmit = () => {
@@ -92,14 +112,6 @@ const onSubmit = () => {
         @click:append-inner="isPasswordVisible = !isPasswordVisible"
         required
       ></v-text-field>
-
-      <v-card class="mb-12" color="surface-variant" variant="tonal">
-        <v-card-text class="text-medium-emphasis text-caption">
-          Warning: After 3 consecutive failed login attempts, you account will
-          be temporarily locked for three hours. If you must login now, you can
-          also click "Forgot login password?" below to reset the login password.
-        </v-card-text>
-      </v-card>
 
       <v-btn
         class="mb-8"
